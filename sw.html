@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyển đổi chữ</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI Symbol', sans-serif;
+        }
+
+        #inputContainer,
+        #outputContainer,
+        #violationsContainer {
+            width: 60%;
+            margin-bottom: 20px;
+        }
+
+        #inputText,
+        #outputText {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 18px;
+            overflow-x: auto; /* Thêm thanh cuộn ngang khi cần thiết */
+            overflow-wrap: break-word;
+            white-space: pre-wrap; 
+        }
+
+        #buttonsContainer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+        }
+
+        #convertButton {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        #copyButton {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        #violationsBeforeCount,
+        #violationsAfterCount {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        h1{
+            color: #4CAF50;
+            font-family:Arial, Helvetica, sans-serif;
+            text-decoration: underline ;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>TRI TECHZMEDIA</h1>
+    <div id="inputContainer">
+        <textarea id="inputText" placeholder="Nhập nội dung cần lách từ vpcs"></textarea>
+        <div id="buttonsContainer">
+            <button class="button" onclick="convertText()">Chuyển đổi</button>
+            <button class="button" onclick="clearText()">Xóa</button>
+        </div>
+    </div>
+
+    <div id="violationsContainer">
+        <div id="violationsBeforeCount">Từ vi phạm trước chuyển đổi: <span>0</span></div>
+        <div id="violationsAfterCount">Từ vi phạm sau chuyển đổi: <span>0</span></div>
+    </div>
+
+    <div id="outputContainer">
+        <textarea type="text" id="outputText"></textarea>
+        <button class="button" id="copyButton" onclick="copyToClipboard()">Sao Chép</button>
+    </div>
+
+    <script>
+        function convertText() {
+            var inputText = document.getElementById('inputText').value;
+            var outputText = document.getElementById('outputText');
+            var violationsBeforeCount = document.getElementById('violationsBeforeCount').getElementsByTagName('span')[0];
+            var violationsAfterCount = document.getElementById('violationsAfterCount').getElementsByTagName('span')[0];
+
+            // Đếm số từ vi phạm trước chuyển đổi
+            var countBefore = countViolations(inputText);
+            violationsBeforeCount.innerText = countBefore;
+
+            var convertedText = convertToSpecialCharacters(inputText);
+
+            // Đếm số từ vi phạm sau chuyển đổi
+            var countAfter = countViolations(convertedText);
+            violationsAfterCount.innerText = countAfter;
+
+            outputText.value = convertedText;
+        }
+
+        function convertToSpecialCharacters(text) {
+            var charMap = {
+                'a': 'а',
+                'b': 'b',
+                'c': 'с',
+                'd': 'ԁ',
+                'e': 'е',
+                'f': 'f',
+                'g': 'ɡ',
+                'h': 'һ',
+                'i': 'Ꭵ',
+                'j': 'j',
+                'k': 'k',
+                'l': 'ⅼ',
+                'm': 'ɱ',
+                'n': 'n',
+                'o': 'о',
+                'p': 'р',
+                'q': 'q',
+                'r': 'ɾ',
+                's': 'ѕ',
+                't': 't',
+                'u': 'u',
+                'v': 'v',
+                'w': 'w',
+                'x': 'х',
+                'y': 'у',
+                'z': 'z',
+                'ĩ': 'ῖ',
+                'ì': 'ὶ',
+                'ỉ': 'ἰ',
+                '%': '.%',
+                'ụ': 'ụ',
+                'bikini': 'b𝗂k𝗂n𝗂',
+            };
+            var convertedText = '';
+            for (var i = 0; i < text.length; i++) {
+                var char = text.charAt(i).toLowerCase();
+                if (charMap[char]) {
+                    convertedText += charMap[char];
+                } else {
+                    convertedText += char;
+                }
+            }
+            return convertedText;
+        }
+
+        function countViolations(text) {
+            var violationsCount = 0;
+            var violationsWords = [
+                'thuốc lá', 'mụn', 'sẹo mỡ mỡ', 'sẹo', 'ăn kiêng', 'yếu sinh lý', 'giảm cân', 'tăng cân', 'rượu',
+                'xương khớp', 'viêm', 'thực phẩm chức năng', 'ăn kiêng', 'hộ chiếu', 'bằng lái xe', 'sổ đỏ', 'sổ hộ khẩu',
+                'hẹn hò', 'thuốc', 'súng', 'pháo', 'ông kia', 'nữ giới', 'nam giới',
+                'nước anh', 'pháp', 'đức', 'mỹ', 'hoa kỳ', 'người da đen', 'người da trắng', 'dân tộc', 'da đen', 'da trắng',
+                'mọi rợ', 'cam kết hiệu quả', '100%', 'tuyệt đối', 'chắc chắn', 'hiệu quả', 'trị dứt điểm', 'cam kết',
+                'trị mụn', 'trị sẹo', 'chữa hói đầu', 'đảm bảo', 'mỹ', 'sex', 'bikini', 'áo tắm', 'da thịt', 'hở hang',
+                'trước', 'sau', 'sau đó', 'trong 7 ngày', 'gucci', 'armani', 'pepsi', 'cocacola', 'puma', 'zara'
+            ];
+
+            for (var i = 0; i < violationsWords.length; i++) {
+                var violationWord = violationsWords[i].toLowerCase();
+                if (text.includes(violationWord)) {
+                    violationsCount++;
+                }
+            }
+
+            return violationsCount;
+        }
+
+        function clearText() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('outputText').value = '';
+            document.getElementById('violationsBeforeCount').getElementsByTagName('span')[0].innerText = '0';
+            document.getElementById('violationsAfterCount').getElementsByTagName('span')[0].innerText = '0';
+        }
+
+        function copyToClipboard() {
+            var outputText = document.getElementById('outputText');
+            outputText.select();
+            document.execCommand('copy');
+            alert('Đã sao chép kết quả!');
+        }
+    </script>
+</body>
+
+</html>
