@@ -66,13 +66,13 @@ const convertToSpecialCharacters =(text) =>{
 const  countViolations=(text)=> {
     var violationsCount = 0;
     var violationsWords = [
-        'thuốc lá', 'mụn', 'sẹo mỡ mỡ', 'sẹo', 'ăn kiêng', 'yếu sinh lý', 'giảm cân', 'tăng cân', 'rượu',"trắng","béo",
+        'thuốc lá', 'mụn', 'sẹo mỡ mỡ', 'sẹo', 'ăn kiêng', 'yếu sinh lý', 'giảm cân', 'tăng cân', 'rượu',"trắng","béo","collagen","vitamin","nhật bản","nhật","nám","rạn","xạm","tàn nhan","bụng",
         'xương khớp', 'viêm', 'thực phẩm chức năng', 'ăn kiêng', 'hộ chiếu', 'bằng lái xe', 'sổ đỏ', 'sổ hộ khẩu',
         'hẹn hò', 'thuốc', 'súng', 'pháo', 'ông kia', 'nữ giới', 'nam giới',
         'nước anh', 'pháp', 'đức', 'mỹ', 'hoa kỳ', 'người da đen', 'người da trắng', 'dân tộc', 'da đen', 'da trắng',
         'mọi rợ', 'cam kết hiệu quả', '100%', 'tuyệt đối', 'chắc chắn', 'hiệu quả', 'trị dứt điểm', 'cam kết',
         'trị mụn', 'trị sẹo', 'chữa hói đầu', 'đảm bảo', 'mỹ', 'sex', 'bikini', 'áo tắm', 'da thịt', 'hở hang',
-        'trước', 'sau', 'sau đó', 'trong 7 ngày', 'gucci', 'armani', 'pepsi', 'cocacola', 'puma', 'zara', 'trắng da',"nợ","da","tiền","bạc"
+        'trước', 'sau', 'sau đó', 'trong 7 ngày', 'gucci', 'armani', 'pepsi', 'cocacola', 'puma', 'zara', 'trắng da',"nợ","da","tiền","bạc","body","kem",
     ];
 
     for (var i = 0; i < violationsWords.length; i++) {
