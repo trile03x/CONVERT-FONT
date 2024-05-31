@@ -69,6 +69,10 @@ body {
 #violationsBeforeCount span, #violationsAfterCount span{
     color: red;
 }
+img{
+    height: 25px;
+    width: 25px;
+}
 h1{
     text-align: center;
     color: hsl(122, 85%, 28%);
@@ -76,6 +80,7 @@ h1{
     text-decoration: underline ;
     font-style: italic;
     margin-right: 5px;
+    font-size: 21px;
 }
 h2{
     font-size: 14px;
