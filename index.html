@@ -10,7 +10,7 @@
 
 <body>
     <div class="title">
-        <h1>TRI TECHZMEDIA</h1>
+        <h1 href="https://zalo.me/0353388835" >TRI TECHZMEDIA</h1>
         <img src="/img/tick.svg" alt="">
     </div>
     <div id="inputContainer">
@@ -26,13 +26,18 @@
         <div id="violationsAfterCount">Từ vi phạm sau chuyển đổi: <span>0</span></div>
     </div>
 
-    <div id="outputContainer">
+    <div class="outputContainer">
         <textarea type="text" id="outputText" placeholder="Nội dung đã được lách từ vpcs"readonly></textarea>
+       <div id="buttonsContainer">
         <button class="button" id="copyButton" onclick="copyToClipboard()">Sao Chép</button>
+        <button class="button" id="copyButton" onclick="showVPCS()">Xem từ VPCS</button>
+       </div>
     </div>
-    <div id="showVPCS">
-        <h2>Các từ VPCS tìm được</h2>
-        <textarea type="text" id="showVPCSText" readonly></textarea>
+    <div class="showVPCS">
+        <textarea type="text" id="outputTextVPCS" placeholder="Từ VPCS có trong bài"readonly></textarea>
+       <div id="buttonsContainer">
+        <button class="button" id="copyButton" onclick="Exit()">Quay lại</button>
+       </div>
     </div>
     <script src="./app.js"></script>
 </body>

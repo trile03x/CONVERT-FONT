@@ -1,23 +1,32 @@
-var textVPCS="";
+var textVPCS;
+var containOutput = document.querySelector('.outputContainer');
+var containTextVPCS = document.querySelector('.showVPCS');
 function convertText() {
+    textVPCS='';
     var inputText = document.getElementById('inputText').value;
     var outputText = document.getElementById('outputText');
     var violationsBeforeCount = document.getElementById('violationsBeforeCount').getElementsByTagName('span')[0];
     var violationsAfterCount = document.getElementById('violationsAfterCount').getElementsByTagName('span')[0];
-
     // Đếm số từ vi phạm trước chuyển đổi
     inputText = inputText.toLowerCase();
     var countBefore = countViolations(inputText);
     violationsBeforeCount.innerText = countBefore;
-
     var convertedText = convertToSpecialCharacters(inputText);
     // Đếm số từ vi phạm sau chuyển đổi
     var countAfter = countViolations(convertedText);
     violationsAfterCount.innerText = countAfter;
     outputText.value = convertedText;
-    showVPCSText.value=textVPCS;
 }
-
+var outputTextVPCS = document.getElementById('outputTextVPCS');
+function showVPCS(){
+    containOutput.classList.add("active");
+    containTextVPCS.classList.add("active");
+    outputTextVPCS.value = textVPCS;
+}
+function Exit(){
+    containOutput.classList.remove("active");
+    containTextVPCS.classList.remove("active");
+}
 const convertToSpecialCharacters =(text) =>{
     var charMap = {
         'a': 'а',
@@ -32,7 +41,7 @@ const convertToSpecialCharacters =(text) =>{
         'j': 'j',
         'k': 'k',
         'l': 'ⅼ',
-        'm': 'm',
+        'm': 'ᴍ',
         'n': 'ɴ',
         'o': 'о',
         'p': 'р',
@@ -63,23 +72,26 @@ const convertToSpecialCharacters =(text) =>{
     }
     return convertedText;
 }
+let violationsWords = [];
+const fetchViolationsWords = async()=>{
+  try{
+    const response = await fetch('./keyVPCS.json');
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    violationsWords = data.keyCheckVPCS;
+    console.log(violationsWords);
+  }catch(error){
+    console.error('Có lỗi xảy ra khi tải tệp JSON:', error);
+  }
+}
 const  countViolations=(text)=> {
     var violationsCount = 0;
-    var violationsWords = [
-        'thuốc lá', 'mụn', 'sẹo mỡ mỡ', 'sẹo', 'ăn kiêng', 'yếu sinh lý', 'giảm cân', 'tăng cân', 'rượu',"trắng","béo","collagen","vitamin","nhật bản","nhật","nám","rạn","xạm","tàn nhan","bụng",
-        'xương khớp', 'viêm', 'thực phẩm chức năng', 'ăn kiêng', 'hộ chiếu', 'bằng lái xe', 'sổ đỏ', 'sổ hộ khẩu',
-        'hẹn hò', 'thuốc', 'súng', 'pháo', 'ông kia', 'nữ giới', 'nam giới',
-        'nước anh', 'pháp', 'đức', 'mỹ', 'hoa kỳ', 'người da đen', 'người da trắng', 'dân tộc', 'da đen', 'da trắng',
-        'mọi rợ', 'cam kết hiệu quả', '100%', 'tuyệt đối', 'chắc chắn', 'hiệu quả', 'trị dứt điểm', 'cam kết',
-        'trị mụn', 'trị sẹo', 'chữa hói đầu', 'đảm bảo', 'mỹ', 'sex', 'bikini', 'áo tắm', 'da thịt', 'hở hang',
-        'trước', 'sau', 'sau đó', 'trong 7 ngày', 'gucci', 'armani', 'pepsi', 'cocacola', 'puma', 'zara', 'trắng da',"nợ","da","tiền","bạc","body","kem",
-    ];
-
     for (var i = 0; i < violationsWords.length; i++) {
         if (text.includes(violationsWords[i])) {
             violationsCount++;
             textVPCS+=violationsWords[i]+",";
-            console.log(textVPCS);
         }
     }
     return violationsCount;
@@ -90,6 +102,8 @@ function clearText() {
     document.getElementById('outputText').value = '';
     document.getElementById('violationsBeforeCount').getElementsByTagName('span')[0].innerText = '0';
     document.getElementById('violationsAfterCount').getElementsByTagName('span')[0].innerText = '0';
+    outputTextVPCS.value="";
+
 }
 
 function copyToClipboard() {
@@ -98,3 +112,6 @@ function copyToClipboard() {
     document.execCommand('copy');
     alert('Đã sao chép kết quả!');
 }
+document.addEventListener("DOMContentLoaded",async()=>{
+    await fetchViolationsWords();
+})

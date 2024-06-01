@@ -10,19 +10,27 @@ body {
 }
 
 #inputContainer,
-#outputContainer,
+.outputContainer,
+.showVPCS,
 #violationsContainer {
     width: 60%;
     margin-bottom: 20px;
 }
-#showVPCS {
-    width: 60%;
+.showVPCS{
+    display: none;
+}
+.showVPCS.active{
+    display: block;
+}
+.outputContainer.active{
+    display: none;
 }
 #inputText{
     margin-top: 150px;
 }
 #inputText,
-#outputText {
+#outputText,
+#outputTextVPCS {
     width: 100%;
     height: 200px;
     margin-bottom: 10px;
@@ -32,13 +40,14 @@ body {
     overflow-wrap: break-word;
     white-space: pre-wrap; 
 }
-
+#outputTextVPCS{
+    color: red;
+}
 #buttonsContainer {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
-
 .button {
     padding: 10px 20px;
     cursor: pointer;
