@@ -84,12 +84,14 @@ img{
 }
 h1{
     text-align: center;
-    color: hsl(122, 85%, 28%);
     font-family:Arial, Helvetica, sans-serif;
     text-decoration: underline ;
     font-style: italic;
     margin-right: 5px;
     font-size: 21px;
+}
+a{
+    color: hsl(122, 85%, 28%);
 }
 h2{
     font-size: 14px;
